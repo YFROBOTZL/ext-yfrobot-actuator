@@ -1,0 +1,25 @@
+{
+  "name": {
+    "zh-cn": "执行器（模块）",
+    "en": "Actuator"
+  },
+  "description": {
+    "zh-cn": "YFROBOT 执行类：LED模块、蜂鸣器、风扇模块、振动模块、继电器、交通灯模块、语音播报模块、音频播放模块、录放模块",
+    "en": "YFROBOT actuator: LED module, buzzer, fan module, vibration module, relay, traffic light module, voice broadcasting module, audio broadcasting module, recording and playback module"
+  },
+  "author": "YFROBOT",
+  "email": "yfrobot@qq.com",
+  "license": "MIT",
+  "isBoard": false,
+  "id": "yfrobot_actuator",
+  "version": "0.0.1",
+  "platform": [ "win", "mac", "web" ],
+  "asset": {
+    "arduinoC": {
+      "dir": "arduinoC/",
+      "version": "0.0.1",
+      "board": [ "microbit", "esp32", "arduino" ],
+      "main": "main.ts"
+    }
+  }
+}

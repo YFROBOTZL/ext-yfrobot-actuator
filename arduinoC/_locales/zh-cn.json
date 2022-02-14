@@ -1,0 +1,22 @@
+{
+    "yfrobotmodule.outputiDigitalModule|block": "[OUTPUTMODULEDIGITAL]设置[ODMPIN]输出[ODMSTATE]",
+    "yfrobotmodule.OUTPUTMODULEDIGITAL.LED|menu": "LED模块",
+    "yfrobotmodule.OUTPUTMODULEDIGITAL.BUZZERACTIVE|menu": "有源蜂鸣器",
+    "yfrobotmodule.OUTPUTMODULEDIGITAL.FAN|menu": "风扇模块",
+    "yfrobotmodule.OUTPUTMODULEDIGITAL.VIBRATIONMOTOR|menu": "振动电机",
+    "yfrobotmodule.OUTPUTMODULEDIGITAL.RELAY|menu": "继电器模块",
+    "yfrobotmodule.outputAnalogModule|block": "[OUTPUTMODULEANALOG]设置[OAMPIN]输出[OAMSTATE]",
+    "yfrobotmodule.OUTPUTMODULEANALOG.LED|menu": "LED模块",
+    "yfrobotmodule.OUTPUTMODULEANALOG.FAN|menu": "风扇模块",
+    "yfrobotmodule.OUTPUTMODULEANALOG.VIBRATIONMOTOR|menu": "振动电机",
+    "yfrobotmodule.buttonPress|block": "当 [BUTTON] 按钮按下",
+    "yfrobotmodule.qrcode|block": "在坐标x [X] y [Y] 绘制二维码[STR] 尺寸 [SIZE]",
+    "yfrobotmodule.println|block": "在第 [LINE] 显示 [STR]",
+    "yfrobotmodule.print|block": "在坐标x [X] y [Y] 显示 [STR]",
+    "yfrobotmodule.setLineWidth|block": "设置线宽为 [WIDTH] 像素",
+    "yfrobotmodule.getLineWidth|block": "获取线宽",
+    "yfrobotmodule.buttonIsPressed|block": "按钮 [BUTTON] 被按下？",
+    "yfrobotmodule.notTrue|block": "非 [Flag]",
+    "yfrobotmodule.SIZE.1|menu": "29*29(1)",
+    "yfrobotmodule.SIZE.2|menu": "58*58(2)"
+}
