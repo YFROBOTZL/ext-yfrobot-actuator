@@ -32,49 +32,6 @@ enum KAIGUAN {
     LOW
 }
 
-enum PIN_DWrite {
-    //% block="0(RX)"
-    D0,
-    //% block="1(TX)"
-    1,
-    //% block="2"
-    2,
-    //% block="3"
-    3,
-    //% block="4"
-    4,
-    //% block="5"
-    5,
-    //% block="6"
-    6,
-    //% block="7"
-    7,
-    //% block="8"
-    8,
-    //% block="9"
-    9,
-    //% block="10(SS)"
-    10,
-    //% block="11(MOSI)"
-    11,
-    //% block="12(MISO)"
-    12,
-    //% block="13(LED/SCK)"
-    13,
-    //% block="A0"
-    A0,
-    //% block="A1"
-    A1,
-    //% block="A2"
-    A2,
-    //% block="A3"
-    A3,
-    //% block="A4(SDA)"
-    A4,
-    //% block="A5(SCL)"
-    A5
-}
-
 enum ODMONOFF {
     //% block="OFF"
     LOW,
@@ -82,7 +39,7 @@ enum ODMONOFF {
     HIGH
 }
 
-enum OUTPUTMODULEDIGITAL {
+enum OMDDIGITAL {
     //% block="LED"
     LED,
     //% block="Active Buzzer"
@@ -95,7 +52,7 @@ enum OUTPUTMODULEDIGITAL {
     RELAY
 }
 
-enum OUTPUTMODULEANALOG {
+enum OMAANALOG {
     //% block="LED"
     LED,
     //% block="Fan"
@@ -108,7 +65,7 @@ enum OUTPUTMODULEANALOG {
 namespace yfrobotmodule {
 
     //% block="set [OUTPUTMODULEDIGITAL] on [ODMPIN] output [ODMSTATE]" blockType="command"
-    //% OUTPUTMODULEDIGITAL.shadow="dropdownRound" OUTPUTMODULEDIGITAL.options="OUTPUTMODULEDIGITAL" OUTPUTMODULEDIGITAL.defl="LED"
+    //% OUTPUTMODULEDIGITAL.shadow="dropdownRound" OUTPUTMODULEDIGITAL.options="OMDDIGITAL" OUTPUTMODULEDIGITAL.defl="OMDDIGITAL.LED"
     //% ODMPIN.shadow="dropdown" ODMPIN.options="PIN_DigitalWrite"
     //% ODMSTATE.shadow="dropdown" ODMSTATE.options="ODMONOFF" ODMSTATE.defl="HIGH"
     export function outputiDigitalModule(parameter: any, block: any) {
@@ -119,7 +76,7 @@ namespace yfrobotmodule {
     }
 
     //% block="set [OUTPUTMODULEANALOG] on [OAMPIN] output [OAMSTATE]" blockType="command"
-    //% OUTPUTMODULEANALOG.shadow="dropdownRound" OUTPUTMODULEANALOG.options="OUTPUTMODULEANALOG" OUTPUTMODULEANALOG.defl="LED"
+    //% OUTPUTMODULEANALOG.shadow="dropdownRound" OUTPUTMODULEANALOG.options="OMAANALOG" OUTPUTMODULEANALOG.defl="OMAANALOG.LED"
     //% OAMPIN.shadow="dropdown" OAMPIN.options="PIN_AnalogWrite"
     //% OAMSTATE.shadow="range"   OAMSTATE.params.min=0    OAMSTATE.params.max=255    OAMSTATE.defl=200
     export function outputAnalogModule(parameter: any, block: any) {
@@ -129,9 +86,9 @@ namespace yfrobotmodule {
         Generator.addCode(`analogWrite(${outputModulePin},${outputModuleState});`);
     }
 
-    //% block="traffic light module PIN1 [PIN1] PIN2 [PIN2]" blockType="command"
+    //% block="traffic light moduleZZ PIN1 [PIN1] PIN2 [PIN2]" blockType="command"
     //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
-    //% PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite"
+    //% PIN2.shadow="dropdownRound" PIN2.options="PIN_DigitalWrite" PIN2.defl="PIN_DigitalWrite.0.3"
     export function trafficLightInit(parameter: any, block: any) {
         let pin1 = parameter.PIN1.code;
         let pin2 = parameter.PIN2.code;
@@ -140,10 +97,10 @@ namespace yfrobotmodule {
     }
 
     //% block="traffic light module PIN1 [PIN1] [PIN1STATE] PIN2 [PIN2] [PIN2STATE]" blockType="command"
-    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite" PIN1.defl=PIN_DigitalWrite.menu.0
-    //% PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite" PIN2.defl=PIN_DigitalWrite.menu.4
-    //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="HIGH"
-    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="HIGH"
+    //% PIN1.shadow="dropdownRound" PIN1.options="PIN_DigitalWrite" PIN1.defl=PIN_DigitalWrite.menu.0
+    //% PIN2.shadow="dropdownRound" PIN2.options="PIN_DigitalWrite" PIN2.defl=PIN_DigitalWrite.menu.4
+    //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="ODMONOFF.LOW"
+    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="ODMONOFF.HIGH"
     export function trafficLight(parameter: any, block: any) {
         let trafficLightPin1 = parameter.PIN1.code;
         let trafficLightPin2 = parameter.PIN2.code;
@@ -320,7 +277,7 @@ namespace yfrobotmodule {
     //     return str.replace("+"
     // ");
     // }
-    /*
+
     //% block="AnalogWrite:[PIN_AnalogWrite],AnalogRead:[PIN_AnalogRead],DigitalWrite:[PIN_DigitalWrite],DigitalRead:[PIN_DigitalRead]" blockType="command"
     //% PIN_AnalogWrite.shadow="dropdownRound" PIN_AnalogWrite.options="PIN_AnalogWrite"
     //% PIN_AnalogRead.shadow="dropdownRound" PIN_AnalogRead.options="PIN_AnalogRead"
@@ -335,8 +292,6 @@ namespace yfrobotmodule {
 
         Generator.addCode([`(${PIN_AnalogWrite},${PIN_AnalogRead},${PIN_DigitalWrite},${PIN_DigitalRead})`, Generator.ORDER_UNARY_POSTFIX]);
     }
-
-    */
 
 
 }
