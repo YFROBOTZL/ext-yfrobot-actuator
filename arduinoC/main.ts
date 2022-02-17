@@ -34,7 +34,7 @@ enum KAIGUAN {
 
 enum PIN_DWrite {
     //% block="0(RX)"
-    0,
+    D0,
     //% block="1(TX)"
     1,
     //% block="2"
@@ -136,9 +136,23 @@ namespace yfrobotmodule {
         let pin1 = parameter.PIN1.code;
         let pin2 = parameter.PIN2.code;
         Generator.addSetup(`pinMode${pin1}`, `pinMode(${pin1},OUTPUT);`);
-        Generator.addSetup(`pinMode${pin2}`, `pinMode(${pin1},OUTPUT);`);
+        Generator.addSetup(`pinMode${pin2}`, `pinMode(${pin2},OUTPUT);`);
     }
-    
+
+    //% block="traffic light module PIN1 [PIN1] [PIN1STATE] PIN2 [PIN2] [PIN2STATE]" blockType="command"
+    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite" PIN1.defl=PIN_DigitalWrite.menu.0
+    //% PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite" PIN2.defl=PIN_DigitalWrite.menu.4
+    //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="HIGH"
+    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="HIGH"
+    export function trafficLight(parameter: any, block: any) {
+        let trafficLightPin1 = parameter.PIN1.code;
+        let trafficLightPin2 = parameter.PIN2.code;
+        let trafficLightState1 = parameter.PIN1STATE.code;
+        let trafficLightState2 = parameter.PIN2STATE.code;
+        Generator.addCode(`digitalWrite(${trafficLightPin1},${trafficLightState1});`);
+        Generator.addCode(`digitalWrite(${trafficLightPin2},${trafficLightState2});`);
+    }
+
     //% block="57 dot matrix initliallize CLK [CLKPIN] DIO [DIOPIN]" blockType="command"
     //% CLKPIN.shadow="dropdown" CLKPIN.options="PIN_DigitalWrite"
     //% DIOPIN.shadow="dropdown" DIOPIN.options="PIN_DigitalWrite"
@@ -209,65 +223,65 @@ namespace yfrobotmodule {
     }
 
 
-    //% block="show [STR] on the [LINE] line" blockType="command"
-    //% STR.shadow="string" STR.defl=hello
-    //% LINE.shadow="dropdownRound" LINE.options="LINE" LINE.defl="LINE.1"
-    export function println(parameter: any, block: any) {
-        let str = parameter.STR.code
-        let line = parameter.LINE.code
-        Generator.addInclude('oled12864', '#include <oled12864.h>');
-        Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
-        Generator.addSetup(`myoled.begin`, `myoled.begin();`);
-        Generator.addCode(`myoled.setCursorLine(${line});\n\tmyoled.printLine(${str});`);
-    }
+    // //% block="show [STR] on the [LINE] line" blockType="command"
+    // //% STR.shadow="string" STR.defl=hello
+    // //% LINE.shadow="dropdownRound" LINE.options="LINE" LINE.defl="LINE.1"
+    // export function println(parameter: any, block: any) {
+    //     let str = parameter.STR.code
+    //     let line = parameter.LINE.code
+    //     Generator.addInclude('oled12864', '#include <oled12864.h>');
+    //     Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
+    //     Generator.addSetup(`myoled.begin`, `myoled.begin();`);
+    //     Generator.addCode(`myoled.setCursorLine(${line});\n\tmyoled.printLine(${str});`);
+    // }
 
-    //% block="show [STR] at x [X] y [Y]" blockType="command"
-    //% STR.shadow="string" STR.defl=hello
-    //% X.shadow="range" X.params.min=0 X.params.max=127 X.defl=0
-    //% Y.shadow="range" Y.params.min=0 Y.params.max=63 Y.defl=0
-    export function print(parameter: any, block: any) {
-        let str = parameter.STR.code
-        let x = parameter.X.code
-        let y = parameter.Y.code
-        Generator.addInclude('oled12864', '#include <oled12864.h>');
-        Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
-        Generator.addSetup(`myoled.begin`, `myoled.begin();`);
-        Generator.addCode(`myoled.setCursor(${x}, ${y});\n\tmyoled.print(${str});`);
-    }
+    // //% block="show [STR] at x [X] y [Y]" blockType="command"
+    // //% STR.shadow="string" STR.defl=hello
+    // //% X.shadow="range" X.params.min=0 X.params.max=127 X.defl=0
+    // //% Y.shadow="range" Y.params.min=0 Y.params.max=63 Y.defl=0
+    // export function print(parameter: any, block: any) {
+    //     let str = parameter.STR.code
+    //     let x = parameter.X.code
+    //     let y = parameter.Y.code
+    //     Generator.addInclude('oled12864', '#include <oled12864.h>');
+    //     Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
+    //     Generator.addSetup(`myoled.begin`, `myoled.begin();`);
+    //     Generator.addCode(`myoled.setCursor(${x}, ${y});\n\tmyoled.print(${str});`);
+    // }
 
-    //% block="display QR code [STR] at x [X] y [Y] with size [SIZE]" blockType="command"
-    //% STR.shadow="string" STR.defl=http://mindplus.cc
-    //% X.shadow="range" X.params.min=0 X.params.max=127 X.defl=0
-    //% Y.shadow="range" Y.params.min=0 Y.params.max=63 Y.defl=0
-    //% SIZE.shadow="dropdownRound" SIZE.options="SIZE" SIZE.defl="SIZE.2"
-    export function qrcode(parameter: any, block: any) {
-        let str = parameter.STR.code
-        let x = parameter.X.code
-        let y = parameter.Y.code
-        let size = parameter.SIZE.code
-        Generator.addInclude('oled12864', '#include <oled12864.h>');
-        Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
-        Generator.addSetup(`myoled.begin`, `myoled.begin();`);
-        Generator.addCode(`myoled.qrcode(${x}, ${y}, ${str}, ${size});`);
-    }
+    // //% block="display QR code [STR] at x [X] y [Y] with size [SIZE]" blockType="command"
+    // //% STR.shadow="string" STR.defl=http://mindplus.cc
+    // //% X.shadow="range" X.params.min=0 X.params.max=127 X.defl=0
+    // //% Y.shadow="range" Y.params.min=0 Y.params.max=63 Y.defl=0
+    // //% SIZE.shadow="dropdownRound" SIZE.options="SIZE" SIZE.defl="SIZE.2"
+    // export function qrcode(parameter: any, block: any) {
+    //     let str = parameter.STR.code
+    //     let x = parameter.X.code
+    //     let y = parameter.Y.code
+    //     let size = parameter.SIZE.code
+    //     Generator.addInclude('oled12864', '#include <oled12864.h>');
+    //     Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
+    //     Generator.addSetup(`myoled.begin`, `myoled.begin();`);
+    //     Generator.addCode(`myoled.qrcode(${x}, ${y}, ${str}, ${size});`);
+    // }
 
-    //% block="set the line width to [WIDTH] pixels" blockType="command"
-    //% WIDTH.shadow="range" WIDTH.params.min=1 WIDTH.params.max=128 WIDTH.defl=1
-    export function setLineWidth(parameter: any, block: any) {
-        let width = parameter.WIDTH.code
-        Generator.addInclude('oled12864', '#include <oled12864.h>');
-        Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
-        Generator.addSetup(`myoled.begin`, `myoled.begin();`);
-        Generator.addCode(`myoled.setLineWidth(${width});`);
-    }
+    // //% block="set the line width to [WIDTH] pixels" blockType="command"
+    // //% WIDTH.shadow="range" WIDTH.params.min=1 WIDTH.params.max=128 WIDTH.defl=1
+    // export function setLineWidth(parameter: any, block: any) {
+    //     let width = parameter.WIDTH.code
+    //     Generator.addInclude('oled12864', '#include <oled12864.h>');
+    //     Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
+    //     Generator.addSetup(`myoled.begin`, `myoled.begin();`);
+    //     Generator.addCode(`myoled.setLineWidth(${width});`);
+    // }
 
-    //% block="get the line width" blockType="reporter"
-    export function getLineWidth(parameter: any, block: any) {
-        Generator.addInclude('oled12864', '#include <oled12864.h>');
-        Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
-        Generator.addSetup(`myoled.begin`, `myoled.begin();`);
-        Generator.addCode(`myoled.getLineWidth()`);
-    }
+    // //% block="get the line width" blockType="reporter"
+    // export function getLineWidth(parameter: any, block: any) {
+    //     Generator.addInclude('oled12864', '#include <oled12864.h>');
+    //     Generator.addObject(`myoled`, `OLED_12864`, `myoled;`);
+    //     Generator.addSetup(`myoled.begin`, `myoled.begin();`);
+    //     Generator.addCode(`myoled.getLineWidth()`);
+    // }
 
     //% block="button [BUTTON] is pressed?" blockType="boolean"
     //% Flag.shadow="boolean"
