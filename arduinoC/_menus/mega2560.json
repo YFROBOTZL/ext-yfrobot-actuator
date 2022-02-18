@@ -94,7 +94,9 @@
 			["51(MOSI)", "51"],
 			["52(SCK)", "52"],
 			["53(SS)", "53"]
-		]
+		],
+        "default_trafficLight_PIN1": "2",
+        "default_trafficLight_PIN2": "3"
 	},
 	"PIN_DigitalRead": {
 		"menu": [

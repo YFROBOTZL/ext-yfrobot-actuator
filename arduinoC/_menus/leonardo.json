@@ -48,7 +48,9 @@
 			["A3", "A3"],
 			["A4", "A4"],
 			["A5", "A5"]
-		]
+		],
+        "default_trafficLight_PIN1": "4",
+        "default_trafficLight_PIN2": "5"
 	},
 	"PIN_DigitalRead": {
 		"menu": [

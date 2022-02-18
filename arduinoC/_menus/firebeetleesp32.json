@@ -25,7 +25,9 @@
 			["D7", "D7"],
 			["D8", "D8"],
 			["D9", "D9"]
-		]
+		],
+        "default_trafficLight_PIN1": "D2",
+        "default_trafficLight_PIN2": "D3"
 	},
 	"PIN_DigitalRead": {
 		"menu": [

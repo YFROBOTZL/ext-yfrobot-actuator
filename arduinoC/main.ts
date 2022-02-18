@@ -62,10 +62,10 @@ enum OMAANALOG {
 }
 
 //% color="#4d9721" iconWidth=50 iconHeight=40
-namespace yfrobotmodule {
+namespace actuator {
 
     //% block="set [OUTPUTMODULEDIGITAL] on [ODMPIN] output [ODMSTATE]" blockType="command"
-    //% OUTPUTMODULEDIGITAL.shadow="dropdownRound" OUTPUTMODULEDIGITAL.options="OMDDIGITAL" OUTPUTMODULEDIGITAL.defl="OMDDIGITAL.LED"
+    //% OUTPUTMODULEDIGITAL.shadow="dropdown" OUTPUTMODULEDIGITAL.options="OMDDIGITAL" OUTPUTMODULEDIGITAL.defl="OMDDIGITAL.LED"
     //% ODMPIN.shadow="dropdown" ODMPIN.options="PIN_DigitalWrite"
     //% ODMSTATE.shadow="dropdown" ODMSTATE.options="ODMONOFF" ODMSTATE.defl="HIGH"
     export function outputiDigitalModule(parameter: any, block: any) {
@@ -76,7 +76,7 @@ namespace yfrobotmodule {
     }
 
     //% block="set [OUTPUTMODULEANALOG] on [OAMPIN] output [OAMSTATE]" blockType="command"
-    //% OUTPUTMODULEANALOG.shadow="dropdownRound" OUTPUTMODULEANALOG.options="OMAANALOG" OUTPUTMODULEANALOG.defl="OMAANALOG.LED"
+    //% OUTPUTMODULEANALOG.shadow="dropdown" OUTPUTMODULEANALOG.options="OMAANALOG" OUTPUTMODULEANALOG.defl="OMAANALOG.LED"
     //% OAMPIN.shadow="dropdown" OAMPIN.options="PIN_AnalogWrite"
     //% OAMSTATE.shadow="range"   OAMSTATE.params.min=0    OAMSTATE.params.max=255    OAMSTATE.defl=200
     export function outputAnalogModule(parameter: any, block: any) {
@@ -85,27 +85,42 @@ namespace yfrobotmodule {
         let outputModuleState = parameter.OAMSTATE.code;
         Generator.addCode(`analogWrite(${outputModulePin},${outputModuleState});`);
     }
-
-    //% block="traffic light moduleZZ PIN1 [PIN1] PIN2 [PIN2]" blockType="command"
-    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
-    //% PIN2.shadow="dropdownRound" PIN2.options="PIN_DigitalWrite" PIN2.defl="PIN_DigitalWrite.0.3"
-    export function trafficLightInit(parameter: any, block: any) {
-        let pin1 = parameter.PIN1.code;
-        let pin2 = parameter.PIN2.code;
-        Generator.addSetup(`pinMode${pin1}`, `pinMode(${pin1},OUTPUT);`);
-        Generator.addSetup(`pinMode${pin2}`, `pinMode(${pin2},OUTPUT);`);
-    }
-
+/*
+    // block="traffic light module init PIN1 [PIN1] PIN2 [PIN2]" blockType="command"
+    // PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
+    // PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite" PIN2.defl=PIN_DigitalWrite.menu.4
+    // export function trafficLightInit(parameter: any, block: any) {
+    //     let pin1 = parameter.PIN1.code;
+    //     let pin2 = parameter.PIN2.code;
+    //     Generator.addSetup(`pinMode${pin1}`, `pinMode(${pin1},OUTPUT);`);
+    //     Generator.addSetup(`pinMode${pin2}`, `pinMode(${pin2},OUTPUT);`);
+    // }
+*/
     //% block="traffic light module PIN1 [PIN1] [PIN1STATE] PIN2 [PIN2] [PIN2STATE]" blockType="command"
-    //% PIN1.shadow="dropdownRound" PIN1.options="PIN_DigitalWrite" PIN1.defl=PIN_DigitalWrite.menu.0
-    //% PIN2.shadow="dropdownRound" PIN2.options="PIN_DigitalWrite" PIN2.defl=PIN_DigitalWrite.menu.4
+    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
+    //% PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite"
     //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="ODMONOFF.LOW"
-    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="ODMONOFF.HIGH"
+    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="ODMONOFF.LOW"
     export function trafficLight(parameter: any, block: any) {
         let trafficLightPin1 = parameter.PIN1.code;
         let trafficLightPin2 = parameter.PIN2.code;
         let trafficLightState1 = parameter.PIN1STATE.code;
         let trafficLightState2 = parameter.PIN2STATE.code;
+        Generator.addCode(`digitalWrite(${trafficLightPin1},${trafficLightState1});`);
+        Generator.addCode(`digitalWrite(${trafficLightPin2},${trafficLightState2});`);
+    }
+
+    //% block="voice Broadcast module [PIN1] [PIN1STATE]" blockType="command"
+    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
+    //% PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite"
+    //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="ODMONOFF.LOW"
+    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="ODMONOFF.LOW"
+    export function voiceBroadcast(parameter: any, block: any) {
+        let trafficLightPin1 = parameter.PIN1.code;
+        let trafficLightPin2 = parameter.PIN2.code;
+        let trafficLightState1 = parameter.PIN1STATE.code;
+        let trafficLightState2 = parameter.PIN2STATE.code;
+        Generator.addInclude("definevoiceBroadcastFun", `void voiceBroadcast(int addr) {`);
         Generator.addCode(`digitalWrite(${trafficLightPin1},${trafficLightState1});`);
         Generator.addCode(`digitalWrite(${trafficLightPin2},${trafficLightState2});`);
     }
@@ -152,13 +167,13 @@ namespace yfrobotmodule {
         Generator.addCode(`matrix57.set(${dmarray});`);
     }
 
-    // block="when press [BUTTON]" blockType="hat"
-    // BUTTON.shadow="dropdown" BUTTON.options="BTN" BUTTON.defl="BTN.A"
+    //% block="when press [BUTTON]" blockType="hat"
+    //% BUTTON.shadow="dropdown" BUTTON.options="BTN" BUTTON.defl="BTN.A"
     // export function buttonPress(parameter: any, block: any) {
     //     let button = parameter.BUTTON.code;
     //     button = replace(button);
     //     let name = 'button' + button + 'PressCallback';
-    //     if(Generator.board === 'microbit'){
+    //     if(Generator.board === 'arduino'){
     //         Generator.addEvent(name, void", name", true);
     //         Generator.addSetup(block.id, `onEvent(ID_BUTTON_${button}, PRESS, ${name});`, false);
     //     }else{
