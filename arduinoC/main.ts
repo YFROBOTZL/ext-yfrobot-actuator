@@ -61,6 +61,13 @@ enum OMAANALOG {
     VIBRATIONMOTOR
 }
 
+enum OTPADDRESS {
+    //% block="ADDRESS00"
+    0x00,
+    //% block="ADDRESS01"
+    0x01
+}
+
 //% color="#4d9721" iconWidth=50 iconHeight=40
 namespace actuator {
 
@@ -112,17 +119,90 @@ namespace actuator {
 
     //% block="voice Broadcast module [PIN1] [PIN1STATE]" blockType="command"
     //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
-    //% PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite"
-    //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="ODMONOFF.LOW"
-    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="ODMONOFF.LOW"
+    //% PIN1STATE.shadow="dropdownRound" PIN1STATE.options="OTPADDRESS" PIN1STATE.defl="OTPADDRESS.00"
     export function voiceBroadcast(parameter: any, block: any) {
         let trafficLightPin1 = parameter.PIN1.code;
-        let trafficLightPin2 = parameter.PIN2.code;
         let trafficLightState1 = parameter.PIN1STATE.code;
-        let trafficLightState2 = parameter.PIN2STATE.code;
-        Generator.addInclude("definevoiceBroadcastFun", `void voiceBroadcast(int addr) {`);
-        Generator.addCode(`digitalWrite(${trafficLightPin1},${trafficLightState1});`);
-        Generator.addCode(`digitalWrite(${trafficLightPin2},${trafficLightState2});`);
+        // Generator.addInclude("definevoiceBroadcastFun1", `PROGMEM void voiceBroadcastSendData(int voicePin, int addr); // 语音播报模块函数-发送数据-无起始位\n`)
+        // Generator.addInclude("definevoiceBroadcastFun2", `PROGMEM void voiceBroadcastSendDataWithStart(int voicePin, int addr);// 语音播报模块函数-发送数据-有起始位\n`)
+
+        Generator.addInclude("includeMotorDriver", `#include \"MotorDriver.h\"`);
+        Generator.addInclude("defineMotorDriver", `#define MOTORTYPE YF_IIC_TB`);
+        Generator.addInclude("defineMotorDriver111", `uint8_t SerialDebug = 1;`);
+
+        Generator.addInclude("includeA", `// 语音播报模块函数-发送数据-2无起始位\n`+
+            `1void voiceBroadcastSendDataWithStart(int voicePin, int addr) {\n`+
+            `  digitalWrite(voicePin, LOW);\n`+
+            `  delay(30);           // >2ms\n`+
+            `  voiceBroadcastSendData(voicePin, addr);\n`+
+            `}`
+        );
+        Generator.addInclude("includeB", `// 语音播报模块函数-发送数据-2无起始位\n`+
+            `void voiceBroadcastSendDataWithStart(int voicePin, int addr) {\n`+
+            `  digitalWrite(voicePin, LOW);\n`+
+            `  delay(30);           // >2ms\n`+
+            `  voiceBroadcastSendData(voicePin, addr);\n`+
+            `}`
+        );
+        Generator.addInclude("includeC", `// 语音播报模块函数-发送数据-2无起始位\n`+
+            `void voiceBroadcastSendDataWithStart(int voicePin, int addr) {\n`+
+            `  digitalWrite(voicePin, LOW);\n`+
+            `  delay(50);           // >2ms\n`+
+            `  voiceBroadcastSendData(voicePin, addr);\n`+
+            `}`
+        );
+        Generator.addCode(`voiceBroadcastSendDataWithStart(${trafficLightPin1},${trafficLightState1});`);
+    }
+    
+    //% block="voice Broadcast module  [PIN1] [PIN1STATE]" blockType="command"
+    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
+    //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="ODMONOFF.LOW"
+    export function voiceBroadcastCPlay(parameter: any, block: any) {
+        let trafficLightPin1 = parameter.PIN1.code;
+        let trafficLightState1 = parameter.PIN1STATE.code;
+
+        Generator.addInclude("definevoiceBroadcastFunA", `// 语音播报模块函数-发送数据-无起始位\n`+
+            `void voiceBroadcastSendData(int voicePin, int addr) {\n`+
+            `  for (int i = 0; i < 8; i++) {\n`+
+            `    digitalWrite(voicePin, HIGH);\n`+
+            `    if (addr & 1) {\n`+
+            `      delayMicroseconds(2400); // >2400us\n`+
+            `      digitalWrite(voicePin, LOW);\n`+
+            `      delayMicroseconds(800);  // >800us\n`+
+            `    } else {\n`+
+            `      delayMicroseconds(800);  // >800us\n`+
+            `      digitalWrite(voicePin , LOW);\n`+
+            `      delayMicroseconds(2400); // >2400us\n`+
+            `    }\n`+
+            `    addr >>= 1;\n`+
+            `  }\n`+
+            `  digitalWrite(voicePin, HIGH);\n`+
+            `}`
+        );
+        
+        Generator.addInclude("definevoiceBroadcastFunB", `// 语音播报模块函数-发送数据-有起始位\n`+
+            `void voiceBroadcastSendDataWithStart(int voicePin, int addr) {\n`+
+            `  digitalWrite(voicePin , LOW);\n`+
+            `  delay(3);           // >2ms\n`+
+            `  voiceBroadcastSendData(addr);\n`+
+            `}`
+        );
+        
+        Generator.addInclude("definevoiceBroadcastFunC", `// 语音播报模块函数-连续播报\n`+
+            `void voiceBroadcastCPlay(int voicePin, int serial_number[], int sizes) {\n`+
+            `  int checksum = 0;\n`+
+            `  voiceBroadcastSendData2(voicePin, 0xf1); // 头码\n`+
+            `  checksum += 0xf1;\n`+
+            `  for (int index = 0; index < sizes; index++) {\n`+
+            `    voiceBroadcastSendData(voicePin, serial_number[index]); // 语音列表码\n`+
+            `    checksum += serial_number[index];\n`+
+            `  }\n`+
+            `  voiceBroadcastSendData2(voicePin, 0xf3); // 尾码\n`+
+            `  checksum += 0xF3;\n`+
+            `  yfOTPSendDataNoStartCode(otppin, checksum && 0xFF); // 校验和\n`+
+            `}`
+        );
+        Generator.addCode(`voiceBroadcastSendData(${trafficLightPin1},${trafficLightState1});`);
     }
 
     //% block="57 dot matrix initliallize CLK [CLKPIN] DIO [DIOPIN]" blockType="command"
