@@ -13,6 +13,8 @@
     "actuator.OMAANALOG.VIBRATIONMOTOR|menu": "振动电机",
     "actuator.trafficLightInit|block": "交通信号灯初始化PIN1[PIN1]PIN2[PIN2]",
     "actuator.trafficLight|block": "交通信号灯PIN1 [PIN1] [PIN1STATE] PIN2 [PIN2] [PIN2STATE]",
+    "actuator.voiceBroadcast|block": "语音播报模块 [PIN1] 播放 [ADDRESS]",
+    "actuator.voiceBroadcastCPlay|block": "语音播报模块 [PIN1] 连续播放 [ADDRESS]",
     
     "actuator.buttonPress|block": "当 [BUTTON] 按钮按下",
     "actuator.qrcode|block": "在坐标x [X] y [Y] 绘制二维码[STR] 尺寸 [SIZE]",
