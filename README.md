@@ -45,6 +45,7 @@ MIT
 
 主板型号                | 实时模式    | ArduinoC   | MicroPython    | 备注
 ------------------ | :----------: | :----------: | :---------: | -----
+arduino uno        |             |       √       |             | 
 micro:bit        |             |       √       |             | 
 mpython        |             |        √      |             | 
 
