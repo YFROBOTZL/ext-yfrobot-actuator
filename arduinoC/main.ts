@@ -369,6 +369,18 @@ enum MVModule {
     VOICE_BROADCAST
 }
 
+/*************************  Output - Voice Recorder Module *************************/
+enum VRMFunction {
+    //% blockId="VRM_PLAY_ONCE" block="Play Once"
+    0,
+    //% blockId="VRM_PLAY_LOOP" block="Play loop(Stop with power off)"
+    1,
+    //% blockId="VRM_SPEAKER_DISABLE" block="Speaker Disable"
+    2,
+    //% blockId="VRM_SPEAKER_ENABLE" block="Speaker Enable(Default)"
+    3
+}
+
 //% color="#4d9721" iconWidth=50 iconHeight=40
 namespace actuator {
 
@@ -592,6 +604,37 @@ namespace actuator {
         );
 
         Generator.addCode(`audioPlaybackSendData(${apPin1},${apAddress});`);
+    }
+    
+    //% block="voice recorder module [PIN1] [ADDRESS]" blockType="command"
+    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
+    //% ADDRESS.shadow="dropdown" ADDRESS.options="VRMFunction" ADDRESS.defl="VRMFunction.0x11"
+    export function voiceRecorderModuleeFun(parameter: any, block: any) {
+        let apPin1 = parameter.PIN1.code;
+        let apAddress = parameter.ADDRESS.code;        
+        Generator.addInclude(`definevoiceRecorderFunA`, `// 录放模块函数\n`+
+            `void voiceRecorderSendData(int vrPin, int addr) {\n`+
+            `  if(addr == 0){\n`+
+            `    digitalWrite(vrPin, LOW);\n`+
+            `    delayMicroseconds(2);\n`+
+            `    digitalWrite(vrPin, HIGH);\n`+
+            `    delay(50);\n`+
+            `    digitalWrite(vrPin, LOW);\n`+
+            `  }else if(addr == 1){\n`+
+            `    digitalWrite(vrPin, LOW);\n`+
+            `    delayMicroseconds(2);\n`+
+            `    digitalWrite(vrPin, HIGH);\n`+
+            `    delay(2050);\n`+
+            `    digitalWrite(vrPin, LOW);\n`+
+            `  }else if(addr == 2){\n`+
+            `    digitalWrite(vrPin, HIGH);\n`+
+            `  }else if(addr == 3){\n`+
+            `    digitalWrite(vrPin, LOW);\n`+
+            `  }\n`+
+            `}`
+        );
+
+        Generator.addCode(`voiceRecorderSendData(${apPin1},${apAddress});`);
     }
     
     //% block="57 dot matrix initliallize CLK [CLKPIN] DIO [DIOPIN]" blockType="command"

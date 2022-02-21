@@ -31,6 +31,11 @@
     "actuator.AudioPlaybackFun.0x17|menu": "下一目录",
     "actuator.AudioPlaybackFun.0x0A|menu": "清楚数字",
     "actuator.AudioPlaybackFun.0x1C|menu": "停止插播",
+    "actuator.voiceRecorderModuleeFun|block": "录放模块 [PIN1] [ADDRESS]",
+    "actuator.VRMFunction.0|menu": "播放一次",
+    "actuator.VRMFunction.1|menu": "循环播放（断电停止）",
+    "actuator.VRMFunction.2|menu": "喇叭禁用",
+    "actuator.VRMFunction.3|menu": "喇叭使能（默认使能）",
     
     "actuator.buttonPress|block": "当 [BUTTON] 按钮按下",
     "actuator.qrcode|block": "在坐标x [X] y [Y] 绘制二维码[STR] 尺寸 [SIZE]",
