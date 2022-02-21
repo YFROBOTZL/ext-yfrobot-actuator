@@ -35,16 +35,5 @@
     "actuator.VRMFunction.0|menu": "播放一次",
     "actuator.VRMFunction.1|menu": "循环播放（断电停止）",
     "actuator.VRMFunction.2|menu": "喇叭禁用",
-    "actuator.VRMFunction.3|menu": "喇叭使能（默认使能）",
-    
-    "actuator.buttonPress|block": "当 [BUTTON] 按钮按下",
-    "actuator.qrcode|block": "在坐标x [X] y [Y] 绘制二维码[STR] 尺寸 [SIZE]",
-    "actuator.println|block": "在第 [LINE] 显示 [STR]",
-    "actuator.print|block": "在坐标x [X] y [Y] 显示 [STR]",
-    "actuator.setLineWidth|block": "设置线宽为 [WIDTH] 像素",
-    "actuator.getLineWidth|block": "获取线宽",
-    "actuator.buttonIsPressed|block": "按钮 [BUTTON] 被按下？",
-    "actuator.notTrue|block": "非 [Flag]",
-    "actuator.SIZE.1|menu": "29*29(1)",
-    "actuator.SIZE.2|menu": "58*58(2)"
+    "actuator.VRMFunction.3|menu": "喇叭使能（默认使能）"
 }
