@@ -1,4 +1,4 @@
-
+// 无法使用
     
     //% block="voice Broadcast module continuous play [PIN1] [ADDRESS]" blockType="command"
     //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
