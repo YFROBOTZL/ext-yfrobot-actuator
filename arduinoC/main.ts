@@ -377,7 +377,7 @@ enum VRMFunction {
     3
 }
 
-//% color="#4d9721" iconWidth=50 iconHeight=40
+//% color="#15a1e8" iconWidth=50 iconHeight=40
 namespace actuator {
 
     //% block="set [OUTPUTMODULEDIGITAL] on [ODMPIN] output [ODMSTATE]" blockType="command"
