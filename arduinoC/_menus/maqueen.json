@@ -50,8 +50,8 @@
 			["P15(MOSI)", "15"],
 			["P16", "16"]
 		],
-        "default_trafficLight_PIN1": "P1",
-        "default_trafficLight_PIN2": "P2"
+        "default_trafficLight_PIN1": "1",
+        "default_trafficLight_PIN2": "2"
 	},
 	"PIN_DigitalRead": {
 		"menu": [
