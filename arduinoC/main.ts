@@ -399,7 +399,12 @@ namespace actuator {
         let outputModule = parameter.OUTPUTMODULEANALOG.code;
         let outputModulePin = parameter.OAMPIN.code;
         let outputModuleState = parameter.OAMSTATE.code;
-        Generator.addCode(`analogWrite(${outputModulePin},${outputModuleState});`);
+        if(Generator.board === 'esp32'){//如果是掌控板，生成如下代码
+            Generator.addCode(`pwmv = map(${outputModuleState}, 0, 255, 0, 1023);`);
+            Generator.addCode(`analogWrite(${outputModulePin},pwmv);`);
+        }else{
+            Generator.addCode(`analogWrite(${outputModulePin},${outputModuleState});`);
+        }
     }
 /*
     // block="traffic light module init PIN1 [PIN1] PIN2 [PIN2]" blockType="command"
