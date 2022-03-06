@@ -609,7 +609,7 @@ namespace actuator {
     
     //% block="voice recorder module [PIN1] [ADDRESS]" blockType="command"
     //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
-    //% ADDRESS.shadow="dropdown" ADDRESS.options="VRMFunction" ADDRESS.defl="VRMFunction.0x11"
+    //% ADDRESS.shadow="dropdown" ADDRESS.options="VRMFunction" ADDRESS.defl="VRMFunction.0"
     export function voiceRecorderModuleeFun(parameter: any, block: any) {
         let apPin1 = parameter.PIN1.code;
         let apAddress = parameter.ADDRESS.code;        
