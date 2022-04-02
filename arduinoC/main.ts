@@ -39,6 +39,17 @@ enum OMAANALOG {
     VIBRATIONMOTOR
 }
 
+enum TRAFFICLIGHTSTA {
+    //% block="All Off"
+    0,
+    //% block="LED-RED ON"
+    1,
+    //% block="LED-YELLOW ON"
+    2,
+    //% block="LED-GREEN ON"
+    3
+}
+
 /*************************  Output - OTP Fixed voice list  *************************/
 enum OTPFixedVoiceList {
     //% blockId="OTPFVL00" block="老师"
@@ -417,18 +428,27 @@ namespace actuator {
     //     Generator.addSetup(`pinMode${pin2}`, `pinMode(${pin2},OUTPUT);`);
     // }
 */
-    //% block="traffic light module PIN1 [PIN1] [PIN1STATE] PIN2 [PIN2] [PIN2STATE]" blockType="command"
+    //% block="traffic light module PIN1 [PIN1] PIN2 [PIN2] [STATE]" blockType="command"
     //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
     //% PIN2.shadow="dropdown" PIN2.options="PIN_DigitalWrite"
-    //% PIN1STATE.shadow="dropdown" PIN1STATE.options="ODMONOFF" PIN1STATE.defl="ODMONOFF.LOW"
-    //% PIN2STATE.shadow="dropdown" PIN2STATE.options="ODMONOFF" PIN2STATE.defl="ODMONOFF.LOW"
+    //% STATE.shadow="dropdown" STATE.options="TRAFFICLIGHTSTA" PIN1STATE.defl="TRAFFICLIGHTSTA.1"
     export function trafficLight(parameter: any, block: any) {
         let trafficLightPin1 = parameter.PIN1.code;
         let trafficLightPin2 = parameter.PIN2.code;
-        let trafficLightState1 = parameter.PIN1STATE.code;
-        let trafficLightState2 = parameter.PIN2STATE.code;
-        Generator.addCode(`digitalWrite(${trafficLightPin1},${trafficLightState1});`);
-        Generator.addCode(`digitalWrite(${trafficLightPin2},${trafficLightState2});`);
+        let trafficLightState1 = parameter.STATE.code;
+        if (trafficLightState1 === `0`){
+            Generator.addCode(`digitalWrite(${trafficLightPin1},LOW);`);
+            Generator.addCode(`digitalWrite(${trafficLightPin2},LOW);`);
+        }else if (trafficLightState1 === `1`){
+            Generator.addCode(`digitalWrite(${trafficLightPin1},LOW);`);
+            Generator.addCode(`digitalWrite(${trafficLightPin2},HIGH);`);
+        }else if (trafficLightState1 === `2`){
+            Generator.addCode(`digitalWrite(${trafficLightPin1},HIGH);`);
+            Generator.addCode(`digitalWrite(${trafficLightPin2},LOW);`);
+        }else if (trafficLightState1 === `3`){
+            Generator.addCode(`digitalWrite(${trafficLightPin1},HIGH);`);
+            Generator.addCode(`digitalWrite(${trafficLightPin2},HIGH);`);
+        }
     }
 
     //% block="voice Broadcast module [PIN1] [ADDRESS]" blockType="command"
