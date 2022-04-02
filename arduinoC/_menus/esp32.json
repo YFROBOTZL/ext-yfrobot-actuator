@@ -52,8 +52,8 @@
 			["O", "14"],
 			["N", "15"]
 		],
-        "default_trafficLight_PIN1": "P0",
-        "default_trafficLight_PIN2": "P1"
+        "default_trafficLight_PIN1": "P1",
+        "default_trafficLight_PIN2": "P0"
 	},
 	"PIN_DigitalRead": {
 		"menu": [
