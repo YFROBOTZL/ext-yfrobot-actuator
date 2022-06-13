@@ -12,7 +12,7 @@
 			["D10/17", "D10"],
 			["D11/16", "D11"],
 			["D12/4", "D12"],
-			["D13/14", "D13"],
+			["D13/12", "D13"],
 			["A4/15", "A4"],
 			["IO18", "18"],
 			["IO19", "19"],
@@ -36,7 +36,7 @@
 			["D7/13", "13"],
 			["D9/2", "2"],
 			["D12/4", "4"],
-			["D13/14", "14"],
+			["D13/12", "14"],
 			["IO32", "32"],
 			["IO33", "33"]
 		]
@@ -54,7 +54,7 @@
 			["D10/17", "D10"],
 			["D11/16", "D11"],
 			["D12/4", "D12"],
-			["D13/14", "D13"],
+			["D13/12", "D13"],
 			["A4/15", "A4"],
 			["IO18", "18"],
 			["IO19", "19"],
@@ -62,6 +62,14 @@
 			["IO32", "32"],
 			["IO33", "33"]
 		],
+        "default_ESPMWInit_M1PA": "18",
+        "default_ESPMWInit_M1PB": "19",
+        "default_ESPMWInit_M2PA": "23",
+        "default_ESPMWInit_M2PB": "D5",
+        "default_ESPMWInit_M3PA": "D3",
+        "default_ESPMWInit_M3PB": "D13",
+        "default_ESPMWInit_M4PA": "D9",
+        "default_ESPMWInit_M4PB": "A4",
         "default_trafficLight_PIN1": "D2",
         "default_trafficLight_PIN2": "D3"
 	},
@@ -78,16 +86,18 @@
 			["D10/17", "D10"],
 			["D11/16", "D11"],
 			["D12/4", "D12"],
-			["D13/14", "D13"],
+			["D13/12", "D13"],
 			["A4/15", "A4"],
 			["IO18", "18"],
 			["IO19", "19"],
 			["IO23", "23"],
 			["IO32", "32"],
-			["IO33", "33"]
+			["IO33", "33"],
+			["SDA/IO21", "21"],
+			["SCL/IO22", "22"]
 		],
-        "default_readUlrasonicSensor_TRIGPIN": "D3",
-        "default_readUlrasonicSensor_ECHOPIN": "D4"
+        "default_readUlrasonicSensor_TRIGPIN": "21",
+        "default_readUlrasonicSensor_ECHOPIN": "22"
 	},
 	"PINMODE":{
 		"menu": [
