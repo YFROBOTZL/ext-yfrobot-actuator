@@ -11,9 +11,9 @@
 */
 
 enum ODMONOFF {
-    //% block="OFF"
+    //% block="LOW"
     LOW,
-    //% block="ON"
+    //% block="HIGH"
     HIGH
 }
 
