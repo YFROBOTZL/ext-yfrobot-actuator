@@ -402,21 +402,26 @@ namespace actuator {
         Generator.addCode(`digitalWrite(${outputModulePin},${outputModuleState});`);
     }
 
+    /*
+     board="arduino,arduinounor3,arduinonano,mega2560,leonardo"
+     board="microbit,esp32,firebeetleesp32,firebeetleesp32e,telloesp32" 
+     1.7.2版本软件，firebeetleesp32e不正常，等待下一版本测试
+     */
     //% block="set [OUTPUTMODULEANALOG] on [OAMPIN] output [OAMSTATE]" blockType="command"
     //% OUTPUTMODULEANALOG.shadow="dropdown" OUTPUTMODULEANALOG.options="OMAANALOG" OUTPUTMODULEANALOG.defl="OMAANALOG.LED"
     //% OAMPIN.shadow="dropdown" OAMPIN.options="PIN_AnalogWrite"
-    //% OAMSTATE.shadow="range"   OAMSTATE.params.min=0    OAMSTATE.params.max=255    OAMSTATE.defl=200
+    //% OAMSTATE.shadow="range"   OAMSTATE.params.min=0    OAMSTATE.params.max=255    OAMSTATE.defl=200  
     export function outputAnalogModule(parameter: any, block: any) {
         let outputModule = parameter.OUTPUTMODULEANALOG.code;
         let outputModulePin = parameter.OAMPIN.code;
         let outputModuleState = parameter.OAMSTATE.code;
-        if(Generator.board === 'esp32'){//如果是掌控板，生成如下代码
-            // Generator.addCode(`pwmv = map(${outputModuleState}, 0, 255, 0, 1023);`);
+        if(Generator.board === 'esp32'||Generator.board === 'firebeetleesp32'||Generator.board === 'firebeetleesp32e'){//如果是ESP32系列，生成如下代码
             Generator.addCode(`analogWrite(${outputModulePin},map(${outputModuleState}, 0, 255, 0, 1023));`);
         }else{
             Generator.addCode(`analogWrite(${outputModulePin},${outputModuleState});`);
         }
     }
+    
 /*
     // block="traffic light module init PIN1 [PIN1] PIN2 [PIN2]" blockType="command"
     // PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
