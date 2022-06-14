@@ -69,7 +69,9 @@
         "default_ESPMWInit_M3PA": "26",
         "default_ESPMWInit_M3PB": "12",
         "default_ESPMWInit_M4PA": "2",
-        "default_ESPMWInit_M4PB": "15"
+        "default_ESPMWInit_M4PB": "15",
+        "default_trafficLight_PIN1": "25",
+        "default_trafficLight_PIN2": "26"
 	},
 	"PIN_DigitalRead": {
 		"menu": [
