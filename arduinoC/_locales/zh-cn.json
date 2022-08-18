@@ -19,7 +19,7 @@
     "actuator.TRAFFICLIGHTSTA.3|menu": "绿灯亮",
     "actuator.voiceBroadcast|block": "语音播报模块 [PIN1] 播放 [ADDRESS]",
     "actuator.voiceBroadcastFun|block": "语音播报模块 [PIN1] [ADDRESS]",
-    "actuator.voiceBroadcastFunConcatenated|block": "语音播报模块 [PIN1] 连码 [ADDRESS]",    
+    "actuator.voiceBroadcastFunConcatenated|block": "语音播报模块 [PIN1] 连码 [ADDRESS]",
     "actuator.audioPlaybackModuleFunSet|block": "MP3音频播放模块[PIN1] [FUN] [ADDRESS]",
     "actuator.AudioPlaybackFunWithNum.0x0B|menu": "选取播放",
     "actuator.AudioPlaybackFunWithNum.0x0C|menu": "设置音量",
