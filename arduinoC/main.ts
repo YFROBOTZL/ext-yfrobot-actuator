@@ -308,7 +308,13 @@ enum OTPFixedVoiceList2 {
     //% blockId="OTPFVL7D" block="叮叮音效"
     0x7D,
     //% blockId="OTPFVL7E" block="叮叮音效"
-    0x7E
+    0x7E,
+    //% blockId="OTPFVLF1" block="连码-头"
+    0xF1,
+    //% blockId="OTPFVLF3" block="连码-尾"
+    0xF3,
+    //% blockId="OTPFVLF4" block="连码-静音（后接时间单位10ms）"
+    0xF4
 }
 
 enum OTPFixedVoiceFun {
@@ -331,8 +337,11 @@ enum OTPFixedVoiceFun {
     //% blockId="OTPFVF_LOOP" block="循环播放"
     0xF2,
     //% blockId="OTPFVF_STOP" block="停止播放"
-    0xFE
+    0xFE,
+    //% blockId="OTPFVF_F1" block="连码-头"
+    0xF1
 }
+
 
 /*************************  Output - MP3 audio playback module function  *************************/
 enum AudioPlaybackFunWithNum {
@@ -510,6 +519,13 @@ namespace actuator {
     }
 
     //% block="[ADDRESS]" blockType="reporter"
+    //% ADDRESS.shadow="dropdown" ADDRESS.options="OTPFixedVoiceList" ADDRESS.defl="OTPFixedVoiceList.0x00"
+    export function voiceBroadcastList1(parameter: any, block: any) {
+        let vbAddress = parameter.ADDRESS.code;
+        Generator.addCode(`${vbAddress}`);
+    }
+
+    //% block="[ADDRESS]" blockType="reporter"
     //% ADDRESS.shadow="dropdown" ADDRESS.options="OTPFixedVoiceList2" ADDRESS.defl="OTPFixedVoiceList2.0x00"
     export function voiceBroadcastList(parameter: any, block: any) {
         let vbAddress = parameter.ADDRESS.code;
@@ -555,6 +571,36 @@ namespace actuator {
         );
 
         Generator.addCode(`voiceBroadcastSendDataWithStart(${vbPin1},${vbAddress});`);
+    }
+    
+    //% block="voice Broadcast module [PIN1] Concatenated playback [ADDRESS]" blockType="command"
+    //% PIN1.shadow="dropdown" PIN1.options="PIN_DigitalWrite"
+    //% ADDRESS.shadow="dropdownRound" ADDRESS.options="OTPFixedVoiceList2" ADDRESS.defl="OTPFixedVoiceList2.0xF3"
+    export function voiceBroadcastFunConcatenated(parameter: any, block: any) {
+        let vbPin1 = parameter.PIN1.code;
+        let vbAddress = parameter.ADDRESS.code;
+        Generator.addInclude(`definevoiceBroadcastFun1`, `PROGMEM void voiceBroadcastSendData(int voicePin, int addr); // 语音播报模块函数-发送数据-无起始位\n`)
+
+        Generator.addInclude(`definevoiceBroadcastFunA`, `// 语音播报模块函数-发送数据-无起始位\n`+
+            `void voiceBroadcastSendData(int voicePin, int addr) {\n`+
+            `  for (int i = 0; i < 8; i++) {\n`+
+            `    digitalWrite(voicePin, HIGH);\n`+
+            `    if (addr & 1) {\n`+
+            `      delayMicroseconds(2400); // >2400us\n`+
+            `      digitalWrite(voicePin, LOW);\n`+
+            `      delayMicroseconds(800);  // >800us\n`+
+            `    } else {\n`+
+            `      delayMicroseconds(800);  // >800us\n`+
+            `      digitalWrite(voicePin , LOW);\n`+
+            `      delayMicroseconds(2400); // >2400us\n`+
+            `    }\n`+
+            `    addr >>= 1;\n`+
+            `  }\n`+
+            `  digitalWrite(voicePin, HIGH);\n`+
+            `}`
+        );
+
+        Generator.addCode(`voiceBroadcastSendData(${vbPin1},${vbAddress});`);
     }
     
     //% block="audio playback module [PIN1] [FUN] [ADDRESS]" blockType="command"
