@@ -763,10 +763,10 @@ enum VRMFunction {
     0,
     //% blockId="VRM_PLAY_LOOP" block="Play loop(Stop with power off)"
     1,
-    //% blockId="VRM_SPEAKER_DISABLE" block="Speaker Disable"
-    2,
-    //% blockId="VRM_SPEAKER_ENABLE" block="Speaker Enable(Default)"
-    3
+    // // blockId="VRM_SPEAKER_DISABLE" block="Speaker Disable"
+    // 2,
+    // // blockId="VRM_SPEAKER_ENABLE" block="Speaker Enable(Default)"
+    // 3
 }
 
 //% color="#15a1e8" iconWidth=50 iconHeight=40
@@ -1069,10 +1069,10 @@ namespace actuator {
             `    digitalWrite(vrPin, HIGH);\n`+
             `    delay(2050);\n`+
             `    digitalWrite(vrPin, LOW);\n`+
-            `  }else if(addr == 2){\n`+
-            `    digitalWrite(vrPin, HIGH);\n`+
-            `  }else if(addr == 3){\n`+
-            `    digitalWrite(vrPin, LOW);\n`+
+            // `  }else if(addr == 2){\n`+
+            // `    digitalWrite(vrPin, HIGH);\n`+
+            // `  }else if(addr == 3){\n`+
+            // `    digitalWrite(vrPin, LOW);\n`+
             `  }\n`+
             `}`
         );
