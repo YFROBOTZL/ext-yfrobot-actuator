@@ -780,6 +780,9 @@ namespace actuator {
         let outputModule = parameter.OUTPUTMODULEDIGITAL.code;
         let outputModulePin = parameter.ODMPIN.code;
         let outputModuleState = parameter.ODMSTATE.code;
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${outputModulePin}`,`pinMode(${outputModulePin}, OUTPUT);`);
+        }
         Generator.addCode(`digitalWrite(${outputModulePin},${outputModuleState});`);
     }
 
@@ -806,6 +809,12 @@ namespace actuator {
         let trafficLightPin1 = parameter.PIN1.code;
         let trafficLightPin2 = parameter.PIN2.code;
         let trafficLightState1 = parameter.STATE.code;
+        
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${trafficLightPin1}`,`pinMode(${trafficLightPin1}, OUTPUT);`);
+            Generator.addSetup(`pinMode_${trafficLightPin2}`,`pinMode(${trafficLightPin2}, OUTPUT);`);
+        }
+
         if (trafficLightState1 === `0`){
             Generator.addCode(`digitalWrite(${trafficLightPin1},LOW);`);
             Generator.addCode(`digitalWrite(${trafficLightPin2},LOW);`);
@@ -827,6 +836,11 @@ namespace actuator {
     export function voiceBroadcast(parameter: any, block: any) {
         let vbPin1 = parameter.PIN1.code;
         let vbAddress = parameter.ADDRESS.code;
+        
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${vbPin1}`,`pinMode(${vbPin1}, OUTPUT);`);
+        }
+
         Generator.addInclude(`definevoiceBroadcastFun1`, `PROGMEM void voiceBroadcastSendData(int voicePin, int addr); // 语音播报模块函数-发送数据-无起始位\n`)
         Generator.addInclude(`definevoiceBroadcastFun2`, `PROGMEM void voiceBroadcastSendDataWithStart(int voicePin, int addr);// 语音播报模块函数-发送数据-有起始位\n`)
 
@@ -882,6 +896,11 @@ namespace actuator {
     export function voiceBroadcastFun(parameter: any, block: any) {
         let vbPin1 = parameter.PIN1.code;
         let vbAddress = parameter.ADDRESS.code;
+        
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${vbPin1}`,`pinMode(${vbPin1}, OUTPUT);`);
+        }
+
         if(`${vbAddress}` == `0xF1`){
             Generator.addInclude(`definechecksum_${vbPin1}`, `volatile float checksum_${vbPin1} = 0;`);
         }
@@ -930,6 +949,11 @@ namespace actuator {
     export function voiceBroadcastFunConcatenated(parameter: any, block: any) {
         let vbPin1 = parameter.PIN1.code;
         let vbAddress = parameter.ADDRESS.code;
+        
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${vbPin1}`,`pinMode(${vbPin1}, OUTPUT);`);
+        }
+
         Generator.addInclude(`definechecksum_${vbPin1}`, `volatile float checksum_${vbPin1} = 0;`);
         Generator.addInclude(`definevoiceBroadcastFun1`, `PROGMEM void voiceBroadcastSendData(int voicePin, int addr); // 语音播报模块函数-发送数据-无起始位\n`)
 
@@ -970,6 +994,11 @@ namespace actuator {
         let apPin1 = parameter.PIN1.code;
         let apFun = parameter.FUN.code;
         let apAddress = parameter.ADDRESS.code;
+        
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${apPin1}`,`pinMode(${apPin1}, OUTPUT);`);
+        }
+
         Generator.addInclude(`defineaudioPlaybackFun1`, `PROGMEM void audioPlaybackSendData(int mp3Pin, int addr); // MP3音频播放模块函数-发送数据\n`)
         Generator.addInclude(`defineaudioPlaybackFun2`, `PROGMEM void audioPlaybackFun(int mp3Pin, int fun, int addr);// MP3音频播放模块函数-功能设置\n`)
         
@@ -1021,6 +1050,11 @@ namespace actuator {
     export function audioPlaybackModuleFun(parameter: any, block: any) {
         let apPin1 = parameter.PIN1.code;
         let apAddress = parameter.ADDRESS.code;
+        
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${apPin1}`,`pinMode(${apPin1}, OUTPUT);`);
+        }
+
         Generator.addInclude(`defineaudioPlaybackFun1`, `PROGMEM void audioPlaybackSendData(int mp3Pin, int addr); // MP3音频播放模块函数-发送数据\n`)
         
         Generator.addInclude(`defineaudioPlaybackFunA`, `// MP3音频播放模块函数-发送数据\n`+
@@ -1054,7 +1088,12 @@ namespace actuator {
     //% ADDRESS.shadow="dropdown" ADDRESS.options="VRMFunction" ADDRESS.defl="VRMFunction.0"
     export function voiceRecorderModuleeFun(parameter: any, block: any) {
         let apPin1 = parameter.PIN1.code;
-        let apAddress = parameter.ADDRESS.code;        
+        let apAddress = parameter.ADDRESS.code;     
+        
+        if(Generator.board === 'pico'){//如果是pico板，生成如下代码
+            Generator.addSetup(`pinMode_${apPin1}`,`pinMode(${apPin1}, OUTPUT);`);
+        }
+   
         Generator.addInclude(`definevoiceRecorderFunA`, `// 录放模块函数\n`+
             `void voiceRecorderSendData(int vrPin, int addr) {\n`+
             `  if(addr == 0){\n`+
