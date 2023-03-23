@@ -70,8 +70,8 @@
 			["A2/GP28", "28"],
 			["A3/GP29", "29"]
 		],
-        "default_trafficLight_PIN1": "5",
-        "default_trafficLight_PIN2": "4"
+        "default_trafficLight_PIN1": "7",
+        "default_trafficLight_PIN2": "6"
 	},
 	"PIN_DigitalRead": {
 		"menu": [
