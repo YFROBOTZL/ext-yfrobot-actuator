@@ -34,7 +34,7 @@
     "actuator.AudioPlaybackFun.0x15|menu": "下一曲",
     "actuator.AudioPlaybackFun.0x16|menu": "上一目录",
     "actuator.AudioPlaybackFun.0x17|menu": "下一目录",
-    "actuator.AudioPlaybackFun.0x0A|menu": "清楚数字",
+    "actuator.AudioPlaybackFun.0x0A|menu": "清除数字",
     "actuator.AudioPlaybackFun.0x1C|menu": "停止插播",
     "actuator.voiceRecorderModuleeFun|block": "录放模块 [PIN1] [ADDRESS]",
     "actuator.VRMFunction.0|menu": "播放一次",
