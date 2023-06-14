@@ -1005,9 +1005,9 @@ namespace actuator {
         Generator.addInclude(`defineaudioPlaybackFunA`, `// MP3音频播放模块函数-发送数据\n`+
             `void audioPlaybackSendData(int mp3Pin, int addr) {\n`+
             `  digitalWrite(mp3Pin , HIGH);\n`+
-            `  delay(2);           // >2ms\n`+
+            `  delay(1);           // 1ms\n`+
             `  digitalWrite(mp3Pin , LOW);\n`+
-            `  delay(3);           // >2ms\n`+
+            `  delay(5);           // >3ms\n`+
             `  for (int i = 0; i < 8; i++) {\n`+
             `    digitalWrite(mp3Pin, HIGH);\n`+
             `    if (addr & 1) {\n`+
@@ -1060,9 +1060,9 @@ namespace actuator {
         Generator.addInclude(`defineaudioPlaybackFunA`, `// MP3音频播放模块函数-发送数据\n`+
             `void audioPlaybackSendData(int mp3Pin, int addr) {\n`+
             `  digitalWrite(mp3Pin , HIGH);\n`+
-            `  delay(2);           // >2ms\n`+
+            `  delay(1);           // 1ms\n`+
             `  digitalWrite(mp3Pin , LOW);\n`+
-            `  delay(3);           // >2ms\n`+
+            `  delay(5);           // >3ms\n`+
             `  for (int i = 0; i < 8; i++) {\n`+
             `    digitalWrite(mp3Pin, HIGH);\n`+
             `    if (addr & 1) {\n`+
